@@ -395,6 +395,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
                 Route::get('analytic-setup', 'Marketing\AnalyticScriptController@analyticSetup')->name('analytic');
                 Route::post('analytic-setup-update', 'Marketing\AnalyticScriptController@analyticUpdate')->name('analyticUpdate');
                 Route::get('analytic-status', 'Marketing\AnalyticScriptController@analyticStatus')->name('analyticStatus');
+                Route::get('funnel-landing', 'Marketing\FunnelLandingController@index')->name('funnel-landing.index');
+                Route::post('funnel-landing', 'Marketing\FunnelLandingController@update')->name('funnel-landing.update');
             });
 
             //openAI
