@@ -11,6 +11,10 @@ $countryCode= strtolower($country?$country->value:'auto');
 ?>
     <section class="about-section py-5 position-relative">
         <div class="container">
+            <div class="fox-onboarding-banner mb-4">
+                <h2 class="mb-2">Fox Delivery Portal</h2>
+                <p class="mb-0">Fluxo guiado por etapas para manter cadastro e dados sincronizados com o painel administrativo.</p>
+            </div>
             <!-- Page Header -->
             <div class="section-header">
                 <h2 class="title mb-2">{{translate("messages.Deliveryman")}} <span class="text--base">{{translate("messages.Application")}}</span></h2>

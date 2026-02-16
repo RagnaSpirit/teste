@@ -5,6 +5,52 @@
 
     <!-- Basic Settings -->
     @php($landing_page_links =   \App\CentralLogics\Helpers::get_business_settings('landing_page_links'))
+    <section class="fox-hero-section position-relative overflow-hidden">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <span class="fox-badge">{{ translate('messages.welcome') }} • Fox Delivery</span>
+                    <h1 class="fox-hero-title mt-3 mb-3">{{ $landing_data['fixed_header_title'] }}</h1>
+                    <p class="fox-hero-subtitle mb-4">{{ $landing_data['fixed_header_sub_title'] }}</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a class="cmn--btn" href="{{ route('restaurant.create') }}">{{ translate('messages.vendor_registration') }}</a>
+                        <a class="cmn--btn btn--secondary" href="{{ route('deliveryman.create') }}">{{ translate('messages.deliveryman_registration') }}</a>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="fox-hero-card">
+                        <img class="w-100 onerror-image" data-onerror-image="{{ asset('public/assets/admin/img/160x160/img2.jpg') }}"
+                            src="{{ \App\CentralLogics\Helpers::logoFullUrl()}}" alt="Fox Delivery">
+                        <ul class="fox-hero-list mt-4">
+                            <li>Entrega rápida na sua região</li>
+                            <li>Pagamento seguro para seus clientes</li>
+                            <li>Operação unificada para loja e entregador</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="fox-portal-section pb-4">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <a href="{{ route('restaurant.create') }}" class="fox-portal-card d-block text-decoration-none">
+                        <h3>{{ translate('messages.vendor_registration') }}</h3>
+                        <p class="mb-0">Portal com etapas para cadastro de loja, escolha de plano e ativação.</p>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ route('deliveryman.create') }}" class="fox-portal-card d-block text-decoration-none">
+                        <h3>{{ translate('messages.deliveryman_registration') }}</h3>
+                        <p class="mb-0">Portal dedicado para cadastro de entregadores e início da operação.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ==== Banner Section Starts Here ==== -->
     <section class="banner-section position-relative">
         <div class="container">
