@@ -7,287 +7,101 @@
     @php($modules = \App\Models\Module::active()->get())
     @php($features = $landing_data['features'] ?? [])
     @php($zones = $landing_data['available_zone_list'] ?? [])
-    @php($banners = $landing_data['promotional_banners'] ?? [])
 
     <style>
-        :root {
-            --ifood-red: #ea1d2c;
-            --ifood-red-dark: #cf1725;
-            --ifood-bg: #f7f7f7;
-            --ifood-text: #202020;
-            --ifood-muted: #6b7280;
-            --ifood-card: #ffffff;
-            --ifood-border: #ececec;
-        }
+        .ifood-clean-page {background: #f8f8f8; color: #1f2937;}
+        .ifood-clean-hero {padding: 72px 0 56px; background: linear-gradient(180deg, #fff 0%, #fff5f5 100%);} 
+        .ifood-badge {display: inline-flex; gap: .5rem; padding: .45rem .9rem; border-radius: 999px; background: #ffe8eb; color: #d90429; font-weight: 700; font-size: .85rem;}
+        .ifood-title {font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1.1; font-weight: 800; margin: 1rem 0;}
+        .ifood-subtitle {font-size: 1.05rem; color: #4b5563; max-width: 680px;}
+        .ifood-hero-card {background: #fff; border: 1px solid #f0f0f0; border-radius: 22px; padding: 1.25rem; box-shadow: 0 14px 32px rgba(17, 24, 39, .08);}
+        .ifood-hero-list {list-style: none; margin: 1rem 0 0; padding: 0;}
+        .ifood-hero-list li {padding: .55rem 0; border-bottom: 1px dashed #ececec; color: #374151;}
+        .ifood-hero-list li:last-child {border-bottom: none;}
+        .ifood-search-card {background: #fff; border-radius: 16px; border: 1px solid #f0f0f0; padding: 1rem; margin-top: 1.2rem;}
+        .ifood-input {border: 1px solid #e5e7eb; border-radius: 12px; padding: .75rem .9rem; width: 100%;}
 
-        .ifd-page {
-            background: var(--ifood-bg);
-            color: var(--ifood-text);
-        }
+        .ifood-section {padding: 56px 0;}
+        .ifood-section-title {font-size: 1.8rem; font-weight: 800; margin-bottom: .4rem;}
+        .ifood-section-sub {color: #6b7280; margin-bottom: 1.5rem;}
 
-        .ifd-container {
-            max-width: 1180px;
-        }
+        .ifood-card {background: #fff; border: 1px solid #ededed; border-radius: 18px; padding: 1.1rem; height: 100%; transition: all .25s ease;}
+        .ifood-card:hover {transform: translateY(-4px); box-shadow: 0 10px 24px rgba(17, 24, 39, .08);}
+        .ifood-module-icon {width: 46px; height: 46px; object-fit: contain; margin-bottom: .8rem;}
+        .ifood-feature-icon {width: 40px; height: 40px; object-fit: contain; border-radius: 10px;}
 
-        .ifd-hero {
-            padding: 36px 0 56px;
-            background: radial-gradient(circle at top right, #ffe3e6 0%, #fff 42%);
-        }
-
-        .ifd-chip {
-            display: inline-flex;
-            align-items: center;
-            border-radius: 999px;
-            background: #ffe9ec;
-            color: var(--ifood-red);
-            font-weight: 700;
-            font-size: .82rem;
-            padding: .45rem .8rem;
-            margin-bottom: .7rem;
-        }
-
-        .ifd-title {
-            font-size: clamp(2rem, 4.2vw, 3.5rem);
-            line-height: 1.06;
-            font-weight: 800;
-            letter-spacing: -.02em;
-            margin-bottom: .8rem;
-        }
-
-        .ifd-subtitle {
-            color: var(--ifood-muted);
-            font-size: 1.04rem;
-            max-width: 640px;
-        }
-
-        .ifd-search {
-            margin-top: 1.1rem;
-            display: flex;
-            gap: .55rem;
-            background: #fff;
-            border: 1px solid var(--ifood-border);
-            border-radius: 14px;
-            padding: .5rem;
-            box-shadow: 0 8px 26px rgba(32, 32, 32, .05);
-        }
-
-        .ifd-search input {
-            flex: 1;
-            border: none;
-            outline: none;
-            padding: .65rem .75rem;
-            background: transparent;
-        }
-
-        .ifd-btn-red {
-            border: none;
-            border-radius: 10px;
-            background: var(--ifood-red);
-            color: #fff;
-            font-weight: 700;
-            padding: .62rem .95rem;
-            transition: .2s ease;
-        }
-
-        .ifd-btn-red:hover {background: var(--ifood-red-dark); color: #fff;}
-
-        .ifd-preview {
-            background: #fff;
-            border: 1px solid var(--ifood-border);
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 10px 28px rgba(17, 24, 39, .08);
-        }
-
-        .ifd-preview-body {
-            padding: .9rem 1rem 1rem;
-        }
-
-        .ifd-mini-list {
-            list-style: none;
-            margin: .2rem 0 0;
-            padding: 0;
-        }
-
-        .ifd-mini-list li {
-            color: #374151;
-            border-bottom: 1px dashed #ededed;
-            padding: .5rem 0;
-            font-size: .92rem;
-        }
-
-        .ifd-mini-list li:last-child {border-bottom: 0;}
-
-        .ifd-section {
-            padding: 42px 0;
-        }
-
-        .ifd-heading {
-            font-size: 1.7rem;
-            font-weight: 800;
-            margin-bottom: .2rem;
-        }
-
-        .ifd-heading-sub {
-            color: var(--ifood-muted);
-            margin-bottom: 1.25rem;
-        }
-
-        .ifd-card {
-            background: var(--ifood-card);
-            border: 1px solid var(--ifood-border);
-            border-radius: 16px;
-            padding: 1rem;
-            height: 100%;
-            transition: .2s ease;
-        }
-
-        .ifd-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(17, 24, 39, .08);
-        }
-
-        .ifd-category-icon {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            margin-bottom: .8rem;
-        }
-
-        .ifd-banner {
-            display: block;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--ifood-border);
-            min-height: 150px;
-            background: #fff;
-        }
-
-        .ifd-banner img {
-            width: 100%;
-            height: 100%;
-            min-height: 150px;
-            object-fit: cover;
-        }
-
-        .ifd-pill {
-            display: inline-block;
-            border-radius: 999px;
-            border: 1px solid #ffd7db;
-            background: #fff;
-            color: #a11a25;
-            font-weight: 600;
-            font-size: .85rem;
-            padding: .37rem .72rem;
-            margin: .25rem;
-        }
-
-        .ifd-cta {
-            background: #1f2937;
-            border-radius: 20px;
-            color: #fff;
-            padding: 1.8rem;
-        }
-
-        .ifd-cta p {color: rgba(255, 255, 255, .82);}
-
-        @media (max-width: 991px) {
-            .ifd-hero {padding-top: 20px;}
-        }
+        .ifood-pill {display: inline-block; border: 1px solid #f1d0d0; color: #be123c; border-radius: 999px; padding: .35rem .8rem; background: #fff; margin: .25rem;}
+        .ifood-cta {background: #111827; color: #fff; border-radius: 22px; padding: 2rem;}
     </style>
 
-    <main class="ifd-page">
-        <section class="ifd-hero">
-            <div class="container ifd-container">
+    <main class="ifood-clean-page">
+        <section class="ifood-clean-hero">
+            <div class="container">
                 <div class="row g-4 align-items-center">
                     <div class="col-lg-7">
-                        <span class="ifd-chip">Estilo iFood + conteúdo gerenciado no painel</span>
-                        <h1 class="ifd-title">{{ $landing_data['fixed_header_title'] }}</h1>
-                        <p class="ifd-subtitle">{{ $landing_data['fixed_header_sub_title'] }}</p>
+                        <span class="ifood-badge">Delivery • Painel administrativo conectado</span>
+                        <h1 class="ifood-title">{{ $landing_data['fixed_header_title'] }}</h1>
+                        <p class="ifood-subtitle">{{ $landing_data['fixed_header_sub_title'] }}</p>
 
-                        <div class="ifd-search">
-                            <input type="text" readonly value="Tudo desta home é controlado no painel administrativo (módulos, destaques, zonas e banners)." />
-                            <a class="ifd-btn-red text-decoration-none" href="{{ route('admin.dashboard') }}">Abrir painel</a>
+                        <div class="ifood-search-card">
+                            <label class="form-label mb-2 fw-semibold">Operação centralizada</label>
+                            <input class="ifood-input" readonly value="Banners, módulos, zonas, recursos e depoimentos são gerenciados no painel admin e refletidos nesta página." />
                         </div>
 
-                        <div class="d-flex flex-wrap gap-2 mt-3">
+                        <div class="d-flex flex-wrap gap-3 mt-4">
                             <a class="cmn--btn" href="{{ route('restaurant.create') }}">{{ translate('messages.vendor_registration') }}</a>
                             <a class="cmn--btn btn--secondary" href="{{ route('deliveryman.create') }}">{{ translate('messages.deliveryman_registration') }}</a>
                         </div>
                     </div>
 
                     <div class="col-lg-5">
-                        <div class="ifd-preview">
-                            <img class="w-100 onerror-image" data-onerror-image="{{ asset('public/assets/admin/img/160x160/img2.jpg') }}" src="{{ \App\CentralLogics\Helpers::logoFullUrl() }}" alt="Brand">
-                            <div class="ifd-preview-body">
-                                <strong>Operação unificada</strong>
-                                <ul class="ifd-mini-list">
-                                    <li>Home visual limpa e objetiva</li>
-                                    <li>Dados vindo do admin sem hardcode</li>
-                                    <li>Escalável para crescimento do catálogo</li>
-                                </ul>
-                            </div>
+                        <div class="ifood-hero-card">
+                            <img class="w-100 rounded-3 onerror-image" data-onerror-image="{{ asset('public/assets/admin/img/160x160/img2.jpg') }}" src="{{ \App\CentralLogics\Helpers::logoFullUrl() }}" alt="logo">
+                            <ul class="ifood-hero-list">
+                                <li>Catálogo dinâmico por módulo</li>
+                                <li>Cadastro rápido de loja e entregador</li>
+                                <li>Gestão no admin sem editar código</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="ifd-section pt-0">
-            <div class="container ifd-container">
-                <h2 class="ifd-heading">Categorias da plataforma</h2>
-                <p class="ifd-heading-sub">Visual em grid semelhante aos cards de descoberta da home do iFood.</p>
+        <section class="ifood-section">
+            <div class="container">
+                <h2 class="ifood-section-title">{{ $landing_data['fixed_module_title'] }}</h2>
+                <p class="ifood-section-sub">{{ $landing_data['fixed_module_sub_title'] }}</p>
 
                 <div class="row g-3">
                     @forelse ($modules as $module)
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="ifd-card text-center">
-                                <img class="ifd-category-icon onerror-image" data-onerror-image="{{ asset('public/assets/admin/img/100x100/2.png') }}" src="{{ $module['icon_full_url'] ?? asset('public/assets/admin/img/100x100/2.png') }}" alt="{{ $module->module_name }}">
-                                <h6 class="fw-bold mb-1">{{ translate("messages.{$module->module_name}") }}</h6>
-                                <small class="text-muted">{!! \Illuminate\Support\Str::limit(strip_tags($module->description ?? ''), 70) !!}</small>
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="ifood-card">
+                                <img class="ifood-module-icon onerror-image" data-onerror-image="{{ asset('public/assets/admin/img/100x100/2.png') }}" src="{{ $module['icon_full_url'] ?? asset('public/assets/admin/img/100x100/2.png') }}" alt="{{ $module->module_name }}">
+                                <h5 class="fw-bold mb-2">{{ translate("messages.{$module->module_name}") }}</h5>
+                                <div class="text-muted small">{!! \Illuminate\Support\Str::limit(strip_tags($module->description ?? ''), 120) !!}</div>
                             </div>
                         </div>
                     @empty
                         <div class="col-12">
-                            <div class="ifd-card text-muted">Nenhum módulo ativo no momento.</div>
+                            <div class="ifood-card text-muted">Nenhum módulo ativo no momento.</div>
                         </div>
                     @endforelse
                 </div>
             </div>
         </section>
 
-        <section class="ifd-section pt-0">
-            <div class="container ifd-container">
-                <h2 class="ifd-heading">Destaques promocionais</h2>
-                <p class="ifd-heading-sub">Blocos visuais para campanhas gerenciadas pelo painel.</p>
-
-                <div class="row g-3">
-                    @forelse ($banners as $banner)
-                        <div class="col-md-6 col-lg-4">
-                            <a class="ifd-banner" href="javascript:void(0)">
-                                <img class="onerror-image" data-onerror-image="{{ asset('public/assets/admin/img/900x400/img1.jpg') }}" src="{{ $banner['image_full_url'] ?? asset('public/assets/admin/img/900x400/img1.jpg') }}" alt="banner">
-                            </a>
-                        </div>
-                    @empty
-                        <div class="col-md-6 col-lg-4">
-                            <div class="ifd-banner d-flex align-items-center justify-content-center text-muted">Sem banners ativos</div>
-                        </div>
-                    @endforelse
-                </div>
-            </div>
-        </section>
-
-        <section class="ifd-section pt-0">
-            <div class="container ifd-container">
-                <h2 class="ifd-heading">{{ $landing_data['feature_title'] }}</h2>
-                <p class="ifd-heading-sub">{{ $landing_data['feature_short_description'] }}</p>
+        <section class="ifood-section pt-0">
+            <div class="container">
+                <h2 class="ifood-section-title">{{ $landing_data['feature_title'] }}</h2>
+                <p class="ifood-section-sub">{{ $landing_data['feature_short_description'] }}</p>
 
                 <div class="row g-3">
                     @forelse ($features as $feature)
                         <div class="col-md-6 col-lg-4">
-                            <div class="ifd-card">
+                            <div class="ifood-card">
                                 <div class="d-flex align-items-center gap-2 mb-2">
-                                    <img class="ifd-category-icon" style="width:40px;height:40px" src="{{ $feature['image_full_url'] ?? asset('public/assets/admin/img/100x100/2.png') }}" alt="{{ $feature['title'] ?? '' }}">
+                                    <img class="ifood-feature-icon" src="{{ $feature['image_full_url'] ?? asset('public/assets/admin/img/100x100/2.png') }}" alt="{{ $feature['title'] ?? 'feature' }}">
                                     <h6 class="mb-0 fw-bold">{{ $feature['title'] ?? '' }}</h6>
                                 </div>
                                 <p class="text-muted mb-0">{{ $feature['sub_title'] ?? '' }}</p>
@@ -295,7 +109,7 @@
                         </div>
                     @empty
                         <div class="col-12">
-                            <div class="ifd-card text-muted">Sem recursos configurados no painel ainda.</div>
+                            <div class="ifood-card text-muted">Sem recursos configurados no painel ainda.</div>
                         </div>
                     @endforelse
                 </div>
@@ -303,14 +117,14 @@
         </section>
 
         @if ($landing_data['available_zone_status'])
-            <section class="ifd-section pt-0">
-                <div class="container ifd-container">
-                    <h2 class="ifd-heading">{{ $landing_data['available_zone_title'] }}</h2>
-                    <p class="ifd-heading-sub">{{ $landing_data['available_zone_short_description'] }}</p>
+            <section class="ifood-section pt-0">
+                <div class="container">
+                    <h2 class="ifood-section-title">{{ $landing_data['available_zone_title'] }}</h2>
+                    <p class="ifood-section-sub">{{ $landing_data['available_zone_short_description'] }}</p>
 
-                    <div class="ifd-card">
+                    <div class="ifood-card">
                         @forelse ($zones as $zone)
-                            <span class="ifd-pill">{{ $zone['display_name'] }}</span>
+                            <span class="ifood-pill">{{ $zone['display_name'] }}</span>
                         @empty
                             <span class="text-muted">Nenhuma zona disponível.</span>
                         @endforelse
@@ -319,13 +133,13 @@
             </section>
         @endif
 
-        <section class="ifd-section pt-0 pb-5">
-            <div class="container ifd-container">
-                <div class="ifd-cta">
-                    <h3 class="fw-bold mb-2">Layout próximo ao iFood, com gestão central no admin</h3>
-                    <p class="mb-3">Você atualiza conteúdo pelo painel e a home reflete automaticamente sem precisar mexer na estrutura da página.</p>
+        <section class="ifood-section pt-0">
+            <div class="container">
+                <div class="ifood-cta">
+                    <h3 class="fw-bold">Página inicial limpa + gestão total no painel</h3>
+                    <p class="mb-3 text-white-50">Todas as áreas desta home utilizam dados vindos das configurações e cadastros administrativos.</p>
                     <div class="d-flex flex-wrap gap-2">
-                        <a class="cmn--btn" href="{{ route('admin.dashboard') }}">Gerenciar no painel</a>
+                        <a class="cmn--btn" href="{{ route('admin.dashboard') }}">Ir para o painel administrativo</a>
                         <a class="cmn--btn btn--secondary" href="{{ route('contact-us') }}">Falar com suporte</a>
                     </div>
                 </div>
