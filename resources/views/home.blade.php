@@ -106,6 +106,7 @@
                                 </div>
                                 <p class="text-muted mb-0">{{ $feature['sub_title'] ?? '' }}</p>
                             </div>
+                            <p class="text-muted mb-0">{{ $feature['sub_title'] ?? '' }}</p>
                         </div>
                     @empty
                         <div class="col-12">
