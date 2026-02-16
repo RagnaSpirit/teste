@@ -1,13 +1,13 @@
 @extends('layouts.landing.app')
-@section('title',$content['title'] ?? 'Portal do Entregador | Ganhe com liberdade')
+@section('title','Portal do Entregador | Ganhe com liberdade')
 @section('content')
 @include('funnel._tracking')
 @include('funnel._style')
 <div data-funnel-page="deliveryman_portal_home" class="container py-5 funnel-br">
     <section class="hero">
-        <span class="kicker">{{ $content['kicker'] ?? 'Entregador' }}</span>
-        <h1>{{ $content['title'] ?? '' }}</h1>
-        <p class="lead">{{ $content['subtitle'] ?? '' }}</p>
+        <span class="kicker">Entregador</span>
+        <h1>Ganhe no seu ritmo, com autonomia e suporte</h1>
+        <p class="lead">Seja bike, moto ou carro, tenha acesso a corridas na sua região e acompanhe ganhos de forma simples.</p>
 
         <div class="d-flex flex-wrap gap-2">
             <a class="btn cta-main mr-2" href="{{ route('funnel.delivery.start') }}" data-track-event="cta_click" data-track-payload='{"cta":"start_delivery"}'>Começar a entregar</a>

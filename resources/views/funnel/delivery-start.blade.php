@@ -1,16 +1,16 @@
 @extends('layouts.landing.app')
-@section('title',$content['title'] ?? 'Começar a Entregar')
+@section('title','Começar a Entregar')
 @section('content')
 @include('funnel._tracking')
 @include('funnel._style')
 <div data-funnel-page="deliveryman_start" class="container py-5 funnel-br">
     <section class="hero">
-        <span class="kicker">{{ $content['kicker'] ?? 'Cadastro de Entregador' }}</span>
-        <h1>{{ $content['title'] ?? '' }}</h1>
+        <span class="kicker">Cadastro de Entregador</span>
+        <h1>Comece em poucos passos e aumente sua renda</h1>
         <ul class="step-list mt-3">
-            @foreach(($content['steps'] ?? []) as $step)
-                <li>{{ $step }}</li>
-            @endforeach
+            <li>Baixe o app do entregador e crie sua conta.</li>
+            <li>Preencha seus dados e envie os documentos.</li>
+            <li>Após aprovação, ative e comece suas entregas.</li>
         </ul>
         <a class="btn cta-main" href="{{ route('deliveryman.create') }}" data-track-event="download_click" data-track-payload='{"app":"deliveryman"}'>Quero me cadastrar</a>
     </section>

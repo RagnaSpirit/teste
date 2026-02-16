@@ -35,8 +35,6 @@ Route::post('/subscribeToTopic', [FirebaseController::class, 'subscribeToTopic']
 // Funnel pages (national growth)
 Route::get('baixe-app', 'FunnelController@downloadApp')->name('funnel.download-app');
 Route::get('pwa', 'FunnelController@pwa')->name('funnel.pwa');
-Route::get('pwa/manifest.webmanifest', 'FunnelController@pwaManifest')->name('funnel.pwa.manifest');
-Route::get('funnel-sw.js', 'FunnelController@pwaServiceWorker')->name('funnel.pwa.sw');
 
 Route::prefix('entregador')->group(function () {
     Route::get('/', 'FunnelController@deliveryHome')->name('funnel.delivery.home');

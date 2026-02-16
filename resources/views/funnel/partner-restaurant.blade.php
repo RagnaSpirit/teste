@@ -1,18 +1,18 @@
 @extends('layouts.landing.app')
-@section('title',$content['title'] ?? 'Cadastre seu Restaurante | Parceiros')
+@section('title','Cadastre seu Restaurante | Parceiros')
 @section('content')
 @include('funnel._tracking')
 @include('funnel._style')
 <div data-funnel-page="merchant_restaurant" class="container py-5 funnel-br">
     <section class="hero">
-        <span class="kicker">{{ $content['kicker'] ?? 'Parceiros' }}</span>
-        <h1>{{ $content['title'] ?? '' }}</h1>
-        <p class="lead">{{ $content['subtitle'] ?? '' }}</p>
+        <span class="kicker">Parceiros</span>
+        <h1>Leve seu restaurante para milhões de clientes no Brasil</h1>
+        <p class="lead">Aumente vendas com delivery e retirada, gestão simples e visibilidade nacional com foco local.</p>
 
         <ul class="step-list mt-3">
-            @foreach(($content['steps'] ?? []) as $step)
-                <li>{{ $step }}</li>
-            @endforeach
+            <li>Crie sua conta e cadastre CNPJ, dados do titular e contato.</li>
+            <li>Escolha um plano, revise taxas e assine o contrato.</li>
+            <li>Configure cardápio, horário e inicie suas vendas.</li>
         </ul>
 
         <a class="btn cta-main" href="{{ route('restaurant.create') }}" data-track-event="lead_open" data-track-payload='{"lead_type":"merchant"}'>Cadastrar restaurante</a>
