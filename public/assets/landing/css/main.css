@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap");
 :root {
-  --base-1: #00e77b;
-  --base-rgb: 0, 231, 123;
-  --base-2: #04f485;
-  --base-rgb-2: 4, 244, 133;
+  --base-1: #0d6efd;
+  --base-rgb: 13, 110, 253;
+  --base-2: #3b82f6;
+  --base-rgb-2: 59, 130, 246;
   --primary-clr: #107980;
   /* Test Color */
   /* --base-1: #c70000;
@@ -25,7 +25,7 @@
   --base-44: #61b2fa;
   --base-45: #f92e0f;
   --base-46: rgba(236, 175, 17, 0.9);
-  --header-bg: #f2f8f5;
+  --header-bg: #f3f7ff;
   --body-clr: #717c77;
   --light-clr: #ded6ff;
   --title-clr: #2f3934;
@@ -2891,7 +2891,7 @@ h6 {
   background: var(--base-1);
   border-radius: 10px;
   text-align: center;
-  background: linear-gradient(120deg, #00a759 0%, #03c168 40.8%, #00b05e 84.23%);
+  background: linear-gradient(120deg, #0d6efd 0%, #3b82f6 52%, #1d4ed8 100%);
   box-shadow: 0px 3px 40px rgba(0, 0, 0, 0.1);
   transition: all ease 0.3s;
 }
@@ -4078,3 +4078,92 @@ input[type=text] ~ .show-password .icon-1 {
     }
 }
 
+
+
+.fox-hero-section {
+  padding: 46px 0 24px;
+  background: linear-gradient(180deg, rgba(var(--base-rgb), 0.11) 0%, #fff 100%);
+}
+
+.fox-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(var(--base-rgb), 0.24);
+  border-radius: 999px;
+  padding: 6px 14px;
+  color: var(--base-1);
+  font-weight: 700;
+  font-size: 13px;
+  background: #fff;
+}
+
+.fox-hero-title {
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.1;
+  color: #0f172a;
+}
+
+.fox-hero-subtitle {
+  max-width: 650px;
+  font-size: 18px;
+}
+
+.fox-hero-card {
+  border: 1px solid rgba(var(--base-rgb), 0.16);
+  border-radius: 20px;
+  background: #fff;
+  padding: 24px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+.fox-hero-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.fox-hero-list li {
+  border-top: 1px solid rgba(var(--base-rgb), 0.15);
+  padding: 12px 0;
+  font-weight: 600;
+  color: #334155;
+}
+
+.fox-portal-section {
+  padding-top: 8px;
+}
+
+.fox-portal-card {
+  border: 1px solid rgba(var(--base-rgb), 0.15);
+  border-radius: 16px;
+  background: #fff;
+  padding: 22px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+  height: 100%;
+}
+
+.fox-portal-card h3 {
+  color: var(--base-1);
+  margin-bottom: 8px;
+  font-size: 22px;
+}
+
+
+.fox-onboarding-banner {
+  background: linear-gradient(140deg, rgba(var(--base-rgb), 0.12), rgba(var(--base-rgb), 0.04));
+  border: 1px solid rgba(var(--base-rgb), 0.2);
+  border-radius: 16px;
+  padding: 20px 22px;
+}
+
+.fox-onboarding-banner h2 {
+  color: #0f172a;
+  font-size: clamp(24px, 3vw, 34px);
+}
+
+.fox-onboarding-banner p {
+  color: #334155;
+  max-width: 920px;
+}
