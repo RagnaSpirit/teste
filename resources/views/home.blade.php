@@ -24,6 +24,22 @@
             color: var(--partner-ink);
         }
 
+        .partner-nav {
+            position: sticky;
+            top: 0;
+            z-index: 25;
+            background: rgba(255, 248, 243, .95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--partner-line);
+        }
+
+        .partner-nav-links a {
+            color: var(--partner-ink);
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 1.25rem;
+        }
+
         .partner-btn {
             border-radius: 999px;
             padding: .72rem 1.2rem;
@@ -173,6 +189,22 @@
     </style>
 
     <main class="partner-page">
+        <nav class="partner-nav py-3">
+            <div class="container d-flex align-items-center justify-content-between gap-3">
+                <a href="#inicio" class="d-flex align-items-center gap-2 text-decoration-none">
+                    <img src="{{ \App\CentralLogics\Helpers::logoFullUrl() }}" alt="logo" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">
+                    <span class="fw-bold text-dark">Parceiros {{ $business_name != 'null' ? $business_name : 'Sixam Mart' }}</span>
+                </a>
+                <div class="partner-nav-links d-none d-lg-flex align-items-center">
+                    <a href="#solucoes">Soluções</a>
+                    <a href="#como-funciona">Como funciona</a>
+                    <a href="#recursos">Recursos</a>
+                    <a href="#areas">Áreas atendidas</a>
+                </div>
+                <a class="partner-btn partner-btn--primary" href="{{ route('restaurant.create') }}">Cadastrar loja</a>
+            </div>
+        </nav>
+
         <section id="inicio" class="partner-hero">
             <div class="container">
                 <div class="row g-4 align-items-center">
@@ -291,8 +323,8 @@
         <section class="partner-section pt-0">
             <div class="container">
                 <div class="partner-cta">
-                    <h3 class="fw-bold">Sua operação pronta para crescer</h3>
-                    <p class="text-white-50 mb-3">Cadastre sua loja, organize seu catálogo e acompanhe tudo pelo painel administrativo.</p>
+                    <h3 class="fw-bold">Navegação renovada e visual em nova paleta</h3>
+                    <p class="text-white-50 mb-3">A estrutura foi organizada para lembrar páginas de parceiros: topo com âncoras, blocos objetivos e CTA em destaque.</p>
                     <div class="d-flex flex-wrap gap-2">
                         <a class="partner-btn partner-btn--primary" href="{{ route('admin.dashboard') }}">Acessar painel</a>
                         <a class="partner-btn partner-btn--ghost" href="{{ route('contact-us') }}">Falar com suporte</a>
