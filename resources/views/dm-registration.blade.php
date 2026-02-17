@@ -13,7 +13,6 @@ $countryCode= strtolower($country?$country->value:'auto');
         <div class="container">
             <div class="fox-onboarding-banner mb-4">
                 <h2 class="mb-2">Fox Delivery Portal</h2>
-                <p class="mb-0">Fluxo guiado por etapas para manter cadastro e dados sincronizados com o painel administrativo.</p>
             </div>
             <!-- Page Header -->
             <div class="section-header">
