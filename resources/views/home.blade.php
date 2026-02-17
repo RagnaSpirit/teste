@@ -192,6 +192,82 @@
             border-radius: 24px;
             padding: 2.1rem;
         }
+
+        .partner-benefits {
+            background: #f35d5b;
+            border-radius: 28px;
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            color: #fff;
+        }
+
+        .partner-benefits-title {
+            font-size: clamp(1.9rem, 4vw, 3.3rem);
+            line-height: 1.1;
+            font-weight: 900;
+            margin-bottom: 0;
+            max-width: 320px;
+        }
+
+        .partner-benefit-card {
+            background: #fff4f4;
+            border-radius: 18px;
+            border: 1px solid #ffc7c6;
+            padding: 1.25rem;
+            color: #374151;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: .8rem;
+        }
+
+        .partner-benefit-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #ffd3d2;
+            color: #f35d5b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: .8rem;
+            text-transform: uppercase;
+        }
+
+        .partner-benefit-card h3 {
+            font-size: clamp(1.3rem, 2.2vw, 2rem);
+            color: #ef4444;
+            margin: 0;
+            line-height: 1.25;
+            font-weight: 800;
+        }
+
+        .partner-benefit-card p {
+            margin: 0;
+            color: #4b5563;
+            font-size: 1rem;
+        }
+
+        .partner-benefit-link {
+            margin-top: auto;
+            color: #ef4444;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+        }
+
+        .partner-benefit-link:hover {
+            color: #dc2626;
+        }
+
+        @media (max-width: 991px) {
+            .partner-benefits-title {
+                max-width: none;
+            }
+        }
     </style>
 
     <main class="partner-page">
@@ -313,10 +389,27 @@
 
         <section class="partner-section pt-0">
             <div class="container">
-                <div class="partner-cta">
-                    <div class="d-flex flex-wrap justify-content-center gap-3">
-                        <a class="partner-btn partner-btn--primary partner-btn--xl" href="{{ route('admin.dashboard') }}">Acessar Peinal</a>
-                        <a class="partner-btn partner-btn--ghost partner-btn--xl" href="{{ route('contact-us') }}">Suporte</a>
+                <div class="partner-benefits">
+                    <div class="row g-3 align-items-stretch">
+                        <div class="col-lg-5 d-flex align-items-center">
+                            <h2 class="partner-benefits-title">Vantagens que só quem é parceiro iFood têm</h2>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <article class="partner-benefit-card">
+                                <span class="partner-benefit-icon">icon</span>
+                                <h3>Gestão simples e fácil</h3>
+                                <p>Autonomia e facilidade para gerenciar seus pedidos em uma única plataforma</p>
+                                <a class="partner-benefit-link" href="{{ route('restaurant.create') }}">Quero ser parceiro <span aria-hidden="true">›</span></a>
+                            </article>
+                        </div>
+                        <div class="col-sm-6 col-lg-4">
+                            <article class="partner-benefit-card">
+                                <span class="partner-benefit-icon">icon</span>
+                                <h3>Estamos presentes em 1200 cidades</h3>
+                                <p>Seus pedidos com um maior alcance de clientes</p>
+                                <a class="partner-benefit-link" href="{{ route('restaurant.create') }}">Quero ser parceiro <span aria-hidden="true">›</span></a>
+                            </article>
+                        </div>
                     </div>
                 </div>
             </div>
