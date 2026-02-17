@@ -524,18 +524,27 @@
                     <div>
                         <div class="shadow-sm p-xxl-20 p-sm-3 p-0">
                             <div class="mb-20">
-                                <h3 class="mb-1">{{ translate('Business TIN') }}</h3>
+                                <h3 class="mb-1">{{ translate('Documentação Brasileira') }}</h3>
                                 {{-- <p class="fz-12px mb-0">{{translate('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')}}</p> --}}
                             </div>
                             <div class="row g-3">
                                 <div class="col-md-8 col-xxl-9">
                                     <div class="bg-light2 rounded p-20 h-100">
+                                        <div class="form-group error-wrapper mb-3">
+                                            <label class="input-label mb-2 d-block title-clr fw-normal"
+                                                for="document_type">{{ translate('Tipo de documento') }}
+                                            </label>
+                                            <select name="document_type" id="document_type" class="form-control">
+                                                <option value="cnpj" {{ ($store->document_type ?? 'cnpj') === 'cnpj' ? 'selected' : '' }}>{{ translate('CNPJ (Pessoa Jurídica)') }}</option>
+                                                <option value="cpf" {{ ($store->document_type ?? '') === 'cpf' ? 'selected' : '' }}>{{ translate('CPF (Pessoa Física)') }}</option>
+                                            </select>
+                                        </div>
                                         <div class="form-group error-wrapper">
                                             <label class="input-label mb-2 d-block title-clr fw-normal"
-                                                for="exampleFormControlInput1">{{ translate('Taxpayer Identification Number(TIN)') }}
+                                                for="exampleFormControlInput1">{{ translate('CPF/CNPJ') }}
                                             </label>
                                             <input type="text" name="tin"
-                                                placeholder="{{ translate('Type Your Taxpayer Identification Number(TIN)') }}"
+                                                placeholder="{{ translate('Digite o CPF ou CNPJ') }}"
                                                 class="form-control" value="{{ $store->tin }}">
                                         </div>
                                         <div class="form-group mb-0 error-wrapper">
@@ -550,7 +559,7 @@
                                     <div class="bg-light2 rounded p-20 h-100 single-document-uploaderwrap">
                                         <div class="d-flex align-items-center gap-1 justify-content-center text-center mb-20">
                                             <div>
-                                                <h4 class="mb-1 fz--14px">{{ translate('TIN Certificate') }}</h4>
+                                                <h4 class="mb-1 fz--14px">{{ translate('Comprovante do documento') }}</h4>
                                                 <p class="fz-12px mb-0">
                                                     {{ translate('pdf, doc, jpg. File size : max 2 MB') }}</p>
                                             </div>
@@ -619,6 +628,22 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row g-3 mt-3" id="cpf-rg-admin-wrapper" style="display: {{ ($store->document_type ?? '') === 'cpf' ? 'flex' : 'none' }};">
+                                <div class="col-md-6">
+                                    <label class="input-label">{{ translate('RG - Frente') }}</label>
+                                    <input type="file" name="cpf_rg_front_image" class="form-control" accept=".jpg,.jpeg,.png">
+                                    @if($store->cpf_rg_front_image_full_url)
+                                        <a href="{{ $store->cpf_rg_front_image_full_url }}" target="_blank" class="btn btn-sm btn--primary mt-2">{{ translate('Visualizar RG frente atual') }}</a>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="input-label">{{ translate('RG - Verso') }}</label>
+                                    <input type="file" name="cpf_rg_back_image" class="form-control" accept=".jpg,.jpeg,.png">
+                                    @if($store->cpf_rg_back_image_full_url)
+                                        <a href="{{ $store->cpf_rg_back_image_full_url }}" target="_blank" class="btn btn-sm btn--primary mt-2">{{ translate('Visualizar RG verso atual') }}</a>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
                     @if (request()->pending == 1)
@@ -640,6 +665,10 @@
     @php($default_location =  \App\CentralLogics\Helpers::get_business_settings('default_location') ?? '')
 
     <script>
+        $(document).on('change', '#document_type', function () {
+            $('#cpf-rg-admin-wrapper').toggle($(this).val() === 'cpf');
+        });
+
         const getAllModules ="{{ route('restaurant.get-all-modules') }}";
          const getModuleType ="{{ route('restaurant.get-module-type') }}";
          const checkModuleTypeUrl ="{{ route('restaurant.check-module-type') }}";
