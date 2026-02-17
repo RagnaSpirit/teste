@@ -276,7 +276,7 @@
             <div class="container">
                 <div class="row g-4 align-items-center">
                     <div class="col-lg-7">
-                        <span class="partner-badge">Estrutura inspirada no fluxo de parceiros</span>
+                        <span class="partner-badge">Sua Plataforma</span>
                         <h1 class="partner-title">{{ $landing_data['fixed_header_title'] }}</h1>
                         <p class="partner-subtitle">{{ $landing_data['fixed_header_sub_title'] }}</p>
                         <div class="d-flex flex-wrap gap-2 mt-4">
