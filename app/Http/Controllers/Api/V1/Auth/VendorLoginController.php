@@ -188,14 +188,12 @@ class VendorLoginController extends Controller
             $validator->getMessageBag()->add('translations', translate('messages.Name and description in english is required'));
         }
 
-        $normalizedDocumentNumber = preg_replace('/\D/', '', $request->tin ?? '');
-
-        if ($request->document_type === 'cpf' && strlen($normalizedDocumentNumber) !== 11) {
+        if ($request->document_type === 'cpf' && strlen(preg_replace('/\D/', '', $request->tin ?? '')) !== 11) {
             $validator->getMessageBag()->add('tin', translate('CPF must contain 11 digits'));
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
-        if ($request->document_type === 'cnpj' && strlen($normalizedDocumentNumber) !== 14) {
+        if ($request->document_type === 'cnpj' && strlen(preg_replace('/\D/', '', $request->tin ?? '')) !== 14) {
             $validator->getMessageBag()->add('tin', translate('CNPJ must contain 14 digits'));
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
@@ -224,7 +222,7 @@ class VendorLoginController extends Controller
         $store->vendor_id = $vendor->id;
         $store->zone_id = $request->zone_id;
         $store->document_type = $request->document_type;
-        $store->tin = $normalizedDocumentNumber;
+        $store->tin = $request->tin;
         $store->tin_expire_date = $request->tin_expire_date == 'null' ? null : $request->tin_expire_date;
         $extension = $request->file('tin_certificate_image') ? $request->file('tin_certificate_image')->getClientOriginalExtension() : 'png';
         $store->tin_certificate_image = Helpers::upload('store/', $extension, $request->file('tin_certificate_image'));

@@ -85,10 +85,8 @@ class VendorController extends Controller
             'logo' => 'required|image|max:2048|mimes:'.IMAGE_FORMAT_FOR_VALIDATION,
             'cover_photo' => 'nullable|image|max:2048|mimes:'.IMAGE_FORMAT_FOR_VALIDATION,
             'document_type' => 'nullable|in:cnpj,cpf',
-            'tin' => 'required_with:document_type',
-            'tin_certificate_image' => 'nullable|file|max:2048|mimes:pdf,doc,docx,jpg,jpeg,png',
-            'cpf_rg_front_image' => 'required_if:document_type,cpf|image|max:2048|mimes:' . IMAGE_FORMAT_FOR_VALIDATION,
-            'cpf_rg_back_image' => 'required_if:document_type,cpf|image|max:2048|mimes:' . IMAGE_FORMAT_FOR_VALIDATION,
+            'cpf_rg_front_image' => 'nullable|image|max:2048|mimes:' . IMAGE_FORMAT_FOR_VALIDATION,
+            'cpf_rg_back_image' => 'nullable|image|max:2048|mimes:' . IMAGE_FORMAT_FOR_VALIDATION,
 
         ], [
             'f_name.required' => translate('messages.first_name_is_required'),
@@ -153,7 +151,7 @@ class VendorController extends Controller
         $store->vendor_id = $vendor->id;
         $store->zone_id = $request->zone_id;
         $store->document_type = $request->document_type;
-        $store->tin = $normalizedDocumentNumber;
+        $store->tin = $request->tin;
         $store->tin_expire_date = $request->tin_expire_date;
         $extension = $request->has('tin_certificate_image') ? $request->file('tin_certificate_image')->getClientOriginalExtension() : 'png';
         $store->tin_certificate_image = Helpers::upload('store/', $extension, $request->file('tin_certificate_image'));
@@ -216,8 +214,6 @@ class VendorController extends Controller
             'logo' => 'nullable|image|max:2048|mimes:'.IMAGE_FORMAT_FOR_VALIDATION,
             'cover_photo' => 'nullable|image|max:2048|mimes:'.IMAGE_FORMAT_FOR_VALIDATION,
             'document_type' => 'nullable|in:cnpj,cpf',
-            'tin' => 'required_with:document_type',
-            'tin_certificate_image' => 'nullable|file|max:2048|mimes:pdf,doc,docx,jpg,jpeg,png',
             'cpf_rg_front_image' => 'nullable|image|max:2048|mimes:' . IMAGE_FORMAT_FOR_VALIDATION,
             'cpf_rg_back_image' => 'nullable|image|max:2048|mimes:' . IMAGE_FORMAT_FOR_VALIDATION,
         ], [
@@ -281,7 +277,7 @@ class VendorController extends Controller
         $store->longitude = $request->longitude;
         $store->zone_id = $request->zone_id;
         $store->document_type = $request->document_type;
-        $store->tin = $normalizedDocumentNumber;
+        $store->tin = $request->tin;
         $store->tin_expire_date = $request->tin_expire_date;
         $extension = $request->has('tin_certificate_image') ? $request->file('tin_certificate_image')->getClientOriginalExtension() : 'png';
         $store->tin_certificate_image = $request->has('tin_certificate_image') ? Helpers::update('store/', $store->tin_certificate_image, $extension, $request->file('tin_certificate_image')) : $store->tin_certificate_image;

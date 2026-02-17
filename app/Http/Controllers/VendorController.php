@@ -113,14 +113,12 @@ class VendorController extends Controller
             'password.uncompromised' => translate('The password is compromised. Please choose a different one'),
             'password.custom' => translate('The password cannot contain white spaces.'),
         ]);
-        $normalizedDocumentNumber = preg_replace('/\D/', '', $request->tin ?? '');
-
-        if ($request->document_type === 'cpf' && strlen($normalizedDocumentNumber) !== 11) {
+        if ($request->document_type === 'cpf' && strlen(preg_replace('/\D/', '', $request->tin ?? '')) !== 11) {
             $validator->getMessageBag()->add('tin', translate('CPF must contain 11 digits'));
             return response()->json(['errors' => Helpers::error_processor($validator)]);
         }
 
-        if ($request->document_type === 'cnpj' && strlen($normalizedDocumentNumber) !== 14) {
+        if ($request->document_type === 'cnpj' && strlen(preg_replace('/\D/', '', $request->tin ?? '')) !== 14) {
             $validator->getMessageBag()->add('tin', translate('CNPJ must contain 14 digits'));
             return response()->json(['errors' => Helpers::error_processor($validator)]);
         }
@@ -174,7 +172,7 @@ class VendorController extends Controller
         $store->module_id = $request->module_id;
         $store->pickup_zone_id = json_encode($request['pickup_zone_id']?? []) ;
         $store->document_type = $request->document_type;
-        $store->tin = $normalizedDocumentNumber;
+        $store->tin = $request->tin;
         $store->tin_expire_date = $request->tin_expire_date;
         $extension = $request->has('tin_certificate_image') ? $request->file('tin_certificate_image')->getClientOriginalExtension() : 'png';
         $store->tin_certificate_image = Helpers::upload('store/', $extension, $request->file('tin_certificate_image'));
