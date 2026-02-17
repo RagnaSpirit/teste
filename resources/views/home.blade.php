@@ -189,21 +189,6 @@
     </style>
 
     <main class="partner-page">
-        <nav class="partner-nav py-3">
-            <div class="container d-flex align-items-center justify-content-between gap-3">
-                <a href="#inicio" class="d-flex align-items-center gap-2 text-decoration-none">
-                    <img src="{{ \App\CentralLogics\Helpers::logoFullUrl() }}" alt="logo" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">
-                    <span class="fw-bold text-dark">Parceiros {{ $business_name != 'null' ? $business_name : 'Sixam Mart' }}</span>
-                </a>
-                <div class="partner-nav-links d-none d-lg-flex align-items-center">
-                    <a href="#solucoes">Soluções</a>
-                    <a href="#como-funciona">Como funciona</a>
-                    <a href="#recursos">Recursos</a>
-                    <a href="#areas">Áreas atendidas</a>
-                </div>
-                <a class="partner-btn partner-btn--primary" href="{{ route('restaurant.create') }}">Cadastrar loja</a>
-            </div>
-        </nav>
 
         <section id="inicio" class="partner-hero">
             <div class="container">
