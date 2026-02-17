@@ -15,7 +15,7 @@
             <li>Confirme e use como se fosse um app.</li>
         </ul>
 
-        <a href="{{ route('home') }}" class="btn cta-main mt-2" data-track-event="cta_click" data-track-payload='{"cta":"open_ifood"}'>Abrir plataforma agora</a>
+        <a href="{{ route('home') }}" class="btn cta-main mt-2" data-track-event="cta_click" data-track-payload='{"cta":"open_fox_delivery"}'>Abrir plataforma agora</a>
     </section>
 
     <section class="section-box">
