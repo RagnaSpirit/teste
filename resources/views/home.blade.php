@@ -68,6 +68,12 @@
             border: 1px solid #ffd7c5;
         }
 
+        .partner-btn--xl {
+            min-width: 220px;
+            padding: 1rem 1.6rem;
+            font-size: 1.05rem;
+        }
+
         .partner-hero {
             padding: 4.2rem 0 3rem;
         }
@@ -308,11 +314,9 @@
         <section class="partner-section pt-0">
             <div class="container">
                 <div class="partner-cta">
-                    <h3 class="fw-bold">Navegação renovada e visual em nova paleta</h3>
-                    <p class="text-white-50 mb-3">A estrutura foi organizada para lembrar páginas de parceiros: topo com âncoras, blocos objetivos e CTA em destaque.</p>
-                    <div class="d-flex flex-wrap gap-2">
-                        <a class="partner-btn partner-btn--primary" href="{{ route('admin.dashboard') }}">Acessar painel</a>
-                        <a class="partner-btn partner-btn--ghost" href="{{ route('contact-us') }}">Falar com suporte</a>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a class="partner-btn partner-btn--primary partner-btn--xl" href="{{ route('admin.dashboard') }}">Acessar Peinal</a>
+                        <a class="partner-btn partner-btn--ghost partner-btn--xl" href="{{ route('contact-us') }}">Suporte</a>
                     </div>
                 </div>
             </div>
