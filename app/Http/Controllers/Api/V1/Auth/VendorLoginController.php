@@ -149,6 +149,11 @@ class VendorLoginController extends Controller
             'module_id' => 'required',
             'logo' => 'required|image|max:2048|mimes:'.IMAGE_FORMAT_FOR_VALIDATION,
             'cover_photo' => 'nullable|image|max:2048|mimes:'.IMAGE_FORMAT_FOR_VALIDATION,
+            'document_type' => 'required|in:cnpj,cpf',
+            'tin' => 'required',
+            'tin_certificate_image' => 'required|file|max:2048|mimes:pdf,doc,docx,jpg,jpeg,png',
+            'cpf_rg_front_image' => 'required_if:document_type,cpf|image|max:2048|mimes:' . IMAGE_FORMAT_FOR_VALIDATION,
+            'cpf_rg_back_image' => 'required_if:document_type,cpf|image|max:2048|mimes:' . IMAGE_FORMAT_FOR_VALIDATION,
         ],[
             'password.required' => translate('The password is required'),
             'password.min_length' => translate('The password must be at least :min characters long'),
@@ -183,6 +188,18 @@ class VendorLoginController extends Controller
             $validator->getMessageBag()->add('translations', translate('messages.Name and description in english is required'));
         }
 
+        $normalizedDocumentNumber = preg_replace('/\D/', '', $request->tin ?? '');
+
+        if ($request->document_type === 'cpf' && strlen($normalizedDocumentNumber) !== 11) {
+            $validator->getMessageBag()->add('tin', translate('CPF must contain 11 digits'));
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
+        if ($request->document_type === 'cnpj' && strlen($normalizedDocumentNumber) !== 14) {
+            $validator->getMessageBag()->add('tin', translate('CNPJ must contain 14 digits'));
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
         if ($validator->fails()) {
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
@@ -206,10 +223,13 @@ class VendorLoginController extends Controller
         $store->longitude = $request->longitude;
         $store->vendor_id = $vendor->id;
         $store->zone_id = $request->zone_id;
-        $store->tin = $request->tin;
+        $store->document_type = $request->document_type;
+        $store->tin = $normalizedDocumentNumber;
         $store->tin_expire_date = $request->tin_expire_date == 'null' ? null : $request->tin_expire_date;
         $extension = $request->file('tin_certificate_image') ? $request->file('tin_certificate_image')->getClientOriginalExtension() : 'png';
         $store->tin_certificate_image = Helpers::upload('store/', $extension, $request->file('tin_certificate_image'));
+        $store->cpf_rg_front_image = $request->hasFile('cpf_rg_front_image') ? Helpers::upload('store/', 'png', $request->file('cpf_rg_front_image')) : null;
+        $store->cpf_rg_back_image = $request->hasFile('cpf_rg_back_image') ? Helpers::upload('store/', 'png', $request->file('cpf_rg_back_image')) : null;
         $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
         $store->module_id = $request->module_id;
         $store->status = 0;

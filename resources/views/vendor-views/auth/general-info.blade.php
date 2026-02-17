@@ -435,7 +435,7 @@
                             <div class="p-20 mb-3">
                                 <div class="card-body">
                                     <div class="mb-3">
-                                        <h4 class="fs-5 mb-2">{{ translate('Business TIN') }}</h4>
+                                        <h4 class="fs-5 mb-2">{{ translate('Documentação Brasileira') }}</h4>
                                         {{-- <p class="fz-12px mb-0">{{translate('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')}}</p> --}}
                                     </div>
                                     <div class="row g-3">
@@ -444,15 +444,24 @@
                                                 <div class="card-body">
                                                     <div class="form-group mb-3">
                                                         <label class="input-label mb-2 d-block title-clr fw-normal"
-                                                               for="exampleFormControlInput1">{{ translate('Taxpayer Identification Number(TIN)') }}
+                                                               for="document_type">{{ translate('Tipo de documento') }} <span class="text-danger">*</span>
+                                                        </label>
+                                                        <select name="document_type" id="document_type" class="form-control __form-control" required>
+                                                            <option value="cnpj" selected>{{ translate('CNPJ (Pessoa Jurídica)') }}</option>
+                                                            <option value="cpf">{{ translate('CPF (Pessoa Física)') }}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label class="input-label mb-2 d-block title-clr fw-normal"
+                                                               for="brazil-doc-number"><span id="brazil-doc-label">{{ translate('CNPJ') }}</span> <span class="text-danger">*</span>
                                                         </label>
                                                         <input type="text" name="tin"
-                                                               placeholder="{{ translate('Type Your Taxpayer Identification Number(TIN)') }}"
-                                                               class=" form-control __form-control">
+                                                               id="brazil-doc-number" placeholder="{{ translate('Digite o CNPJ') }}"
+                                                               class=" form-control __form-control" required>
                                                     </div>
                                                     <div class="form-group mb-0">
                                                         <label class="input-label mb-2 d-block title-clr fw-normal"
-                                                               for="exampleFormControlInput1">{{ translate('Expire Date') }}
+                                                               for="exampleFormControlInput1">{{ translate('Validade do documento (opcional)') }}
                                                         </label>
                                                         <input type="date" name="tin_expire_date"
                                                                class="form-control __form-control">
@@ -465,7 +474,7 @@
                                                 <div
                                                     class="d-flex align-items-center gap-1 justify-content-between mb-20 mb-4">
                                                     <div>
-                                                        <h4 class="mb-2 fs-5">{{ translate('TIN Certificate') }}</h4>
+                                                        <h4 class="mb-2 fs-5">{{ translate('Comprovante do documento') }}</h4>
                                                         <p class="fs-6 mb-0">
                                                             {{ translate('pdf, doc, jpg. File size : max 2 MB') }}</p>
                                                     </div>
@@ -488,7 +497,7 @@
                                                         <div class="document-upload-wrapper" id="doc-upload-wrapper">
                                                             <input type="file" name="tin_certificate_image"
                                                                    class="document_input"
-                                                                   accept=".doc, .pdf, .jpg, .png, .jpeg">
+                                                                   accept=".doc, .pdf, .jpg, .png, .jpeg" required>
                                                             <div class="textbox">
                                                                 <img width="40" height="40" class="svg"
                                                                      src="{{ asset('public/assets/admin/img/doc-uploaded.png') }}"
@@ -499,6 +508,23 @@
                                                                     {{ translate('messages.here') }}</p>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 d-none" id="cpf-rg-upload-wrapper">
+                                            <div class="bg--secondary rounded p-20 h-100">
+                                                <h4 class="mb-2 fs-5">{{ translate('RG obrigatório para cadastro com CPF') }}</h4>
+                                                <p class="fs-6 mb-3">{{ translate('Envie frente e verso do RG (JPG/PNG, até 2MB cada).') }}</p>
+                                                <div class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <label class="input-label mb-2">{{ translate('RG - Frente') }} <span class="text-danger">*</span></label>
+                                                        <input type="file" name="cpf_rg_front_image" id="cpf_rg_front_image" class="form-control __form-control" accept=".jpg,.jpeg,.png">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="input-label mb-2">{{ translate('RG - Verso') }} <span class="text-danger">*</span></label>
+                                                        <input type="file" name="cpf_rg_back_image" id="cpf_rg_back_image" class="form-control __form-control" accept=".jpg,.jpeg,.png">
                                                     </div>
                                                 </div>
                                             </div>
@@ -931,10 +957,26 @@ function submitForm() {
 
 
 
+        function toggleBrazilianDocumentFields() {
+            const selectedDocumentType = $('#document_type').val();
+            const isCpf = selectedDocumentType === 'cpf';
+
+            $('#cpf-rg-upload-wrapper').toggleClass('d-none', !isCpf);
+            $('#cpf_rg_front_image, #cpf_rg_back_image').prop('required', isCpf);
+            $('#brazil-doc-label').text(isCpf ? "{{ translate('CPF') }}" : "{{ translate('CNPJ') }}");
+            $('#brazil-doc-number').attr('placeholder', isCpf ? "{{ translate('Digite o CPF') }}" : "{{ translate('Digite o CNPJ') }}");
+        }
+
+        $('#document_type').on('change', toggleBrazilianDocumentFields);
+        toggleBrazilianDocumentFields();
+
         $('#show-business-plan-div').on('click', function (e) {
             const logo = $('input[name="logo"]')[0];
             const cover = $('input[name="cover_photo"]')[0];
             const tin_certificate_image = $('input[name="tin_certificate_image"]')[0];
+            const cpf_rg_front_image = $('input[name="cpf_rg_front_image"]')[0];
+            const cpf_rg_back_image = $('input[name="cpf_rg_back_image"]')[0];
+            const selectedDocumentType = $('#document_type').val();
 
             const maxFileSize = 2 * 1024 * 1024; // 2MB in bytes
 
@@ -950,12 +992,34 @@ function submitForm() {
             } else if (!cover.files.length) {
                 toastr.error("{{ translate('Vendor_cover_photo_required') }}");
                 e.preventDefault();
+            } else if (!tin_certificate_image.files.length) {
+                toastr.error("{{ translate('Comprovante do documento é obrigatório') }}");
+                e.preventDefault();
             } else if (logo.files[0].size > maxFileSize) {
                 toastr.error("{{ translate('Vendor_logo_must_be_less_than_2MB') }}");
                 e.preventDefault();
             } else if (tin_certificate_image.files.length && tin_certificate_image.files[0].size > maxFileSize) {
                 toastr.error("{{ translate('Tin_certificate_must_be_less_than_2MB') }}");
                 e.preventDefault();
+            } else if (selectedDocumentType === 'cpf' && !cpf_rg_front_image.files.length) {
+                toastr.error("{{ translate('RG frente é obrigatório quando o tipo de documento é CPF') }}");
+                e.preventDefault();
+            } else if (selectedDocumentType === 'cpf' && !cpf_rg_back_image.files.length) {
+                toastr.error("{{ translate('RG verso é obrigatório quando o tipo de documento é CPF') }}");
+                e.preventDefault();
+            } else if (selectedDocumentType === 'cpf' && cpf_rg_front_image.files[0].size > maxFileSize) {
+                toastr.error("{{ translate('RG frente deve ter no máximo 2MB') }}");
+                e.preventDefault();
+            } else if (selectedDocumentType === 'cpf' && cpf_rg_back_image.files[0].size > maxFileSize) {
+                toastr.error("{{ translate('RG verso deve ter no máximo 2MB') }}");
+                e.preventDefault();
+            } else if (selectedDocumentType === 'cpf' && $('#brazil-doc-number').val().replace(/\D/g, '').length !== 11) {
+                toastr.error("{{ translate('CPF deve conter 11 dígitos') }}");
+                e.preventDefault();
+            } else if (selectedDocumentType === 'cnpj' && $('#brazil-doc-number').val().replace(/\D/g, '').length !== 14) {
+                toastr.error("{{ translate('CNPJ deve conter 14 dígitos') }}");
+                e.preventDefault();
+
             } else if (cover.files[0].size > maxFileSize) {
                 toastr.error("{{ translate('Vendor_cover_photo_must_be_less_than_2MB') }}");
                 e.preventDefault();
