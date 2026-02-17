@@ -62,7 +62,7 @@
                     </a>
                     <ul class="menu">
                         <li>
-                            <a id="home-link" href="{{route('home')}}" class="{{ Request::is('/') ? 'active' : '' }}"><span>{{ translate('messages.home') }}</span></a>
+                            <a id="home-link" href="{{route('home')}}" class="{{ Request::is('/') ? 'active' : '' }}"><span>Inicio</span></a>
                         </li>
                         <li>
                             <a href="{{route('about-us')}}" class="{{ Request::is('about-us') ? 'active' : '' }}"><span>{{ translate('messages.about_us') }}</span></a>
