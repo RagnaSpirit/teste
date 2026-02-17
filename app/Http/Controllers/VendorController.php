@@ -99,6 +99,11 @@ class VendorController extends Controller
             'logo' => 'required|image|max:2048|mimes:'.IMAGE_FORMAT_FOR_VALIDATION,
             'cover_photo' => 'nullable|image|max:2048|mimes:'.IMAGE_FORMAT_FOR_VALIDATION,
             'delivery_time_type'=>'required',
+            'document_type' => 'required|in:cnpj,cpf',
+            'tin' => 'required',
+            'tin_certificate_image' => 'required|file|max:2048|mimes:pdf,doc,docx,jpg,jpeg,png',
+            'cpf_rg_front_image' => 'required_if:document_type,cpf|image|max:2048|mimes:' . IMAGE_FORMAT_FOR_VALIDATION,
+            'cpf_rg_back_image' => 'required_if:document_type,cpf|image|max:2048|mimes:' . IMAGE_FORMAT_FOR_VALIDATION,
         ],[
             'password.min_length' => translate('The password must be at least :min characters long'),
             'password.mixed' => translate('The password must contain both uppercase and lowercase letters'),
@@ -108,6 +113,16 @@ class VendorController extends Controller
             'password.uncompromised' => translate('The password is compromised. Please choose a different one'),
             'password.custom' => translate('The password cannot contain white spaces.'),
         ]);
+        if ($request->document_type === 'cpf' && strlen(preg_replace('/\D/', '', $request->tin ?? '')) !== 11) {
+            $validator->getMessageBag()->add('tin', translate('CPF must contain 11 digits'));
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+
+        if ($request->document_type === 'cnpj' && strlen(preg_replace('/\D/', '', $request->tin ?? '')) !== 14) {
+            $validator->getMessageBag()->add('tin', translate('CNPJ must contain 14 digits'));
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+
         if ($validator->fails()) {
                  return response()->json(['errors' => Helpers::error_processor($validator)]);
         }
@@ -156,10 +171,13 @@ class VendorController extends Controller
         $store->zone_id = $request->zone_id;
         $store->module_id = $request->module_id;
         $store->pickup_zone_id = json_encode($request['pickup_zone_id']?? []) ;
+        $store->document_type = $request->document_type;
         $store->tin = $request->tin;
         $store->tin_expire_date = $request->tin_expire_date;
         $extension = $request->has('tin_certificate_image') ? $request->file('tin_certificate_image')->getClientOriginalExtension() : 'png';
         $store->tin_certificate_image = Helpers::upload('store/', $extension, $request->file('tin_certificate_image'));
+        $store->cpf_rg_front_image = $request->hasFile('cpf_rg_front_image') ? Helpers::upload('store/', 'png', $request->file('cpf_rg_front_image')) : null;
+        $store->cpf_rg_back_image = $request->hasFile('cpf_rg_back_image') ? Helpers::upload('store/', 'png', $request->file('cpf_rg_back_image')) : null;
         $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
         $store->status = 0;
         $store->store_business_model = 'none';

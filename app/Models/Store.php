@@ -143,6 +143,9 @@ class Store extends Model
         'tin',
         'tin_expire_date',
         'tin_certificate_image',
+        'document_type',
+        'cpf_rg_front_image',
+        'cpf_rg_back_image',
     ];
 
     /**
@@ -190,7 +193,7 @@ class Store extends Model
     /**
      * @var string[]
      */
-    protected $appends = ['gst_status','gst_code','logo_full_url','cover_photo_full_url','meta_image_full_url','tin_certificate_image_full_url'];
+    protected $appends = ['gst_status','gst_code','logo_full_url','cover_photo_full_url','meta_image_full_url','tin_certificate_image_full_url','cpf_rg_front_image_full_url','cpf_rg_back_image_full_url'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -200,6 +203,36 @@ class Store extends Model
     protected $hidden = [
         'gst'
     ];
+
+
+
+    public function getCpfRgFrontImageFullUrlAttribute(): mixed
+    {
+        $value = $this->cpf_rg_front_image;
+        if (count($this->storage) > 0) {
+            foreach ($this->storage as $storage) {
+                if ($storage['key'] == 'cpf_rg_front_image') {
+                    return Helpers::get_full_url('store', $value, $storage['value']);
+                }
+            }
+        }
+
+        return Helpers::get_full_url('store', $value, 'public');
+    }
+
+    public function getCpfRgBackImageFullUrlAttribute(): mixed
+    {
+        $value = $this->cpf_rg_back_image;
+        if (count($this->storage) > 0) {
+            foreach ($this->storage as $storage) {
+                if ($storage['key'] == 'cpf_rg_back_image') {
+                    return Helpers::get_full_url('store', $value, $storage['value']);
+                }
+            }
+        }
+
+        return Helpers::get_full_url('store', $value, 'public');
+    }
 
     /**
      * @return MorphMany
