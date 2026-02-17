@@ -24,6 +24,22 @@
             color: var(--partner-ink);
         }
 
+        .partner-nav {
+            position: sticky;
+            top: 0;
+            z-index: 25;
+            background: rgba(255, 248, 243, .95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--partner-line);
+        }
+
+        .partner-nav-links a {
+            color: var(--partner-ink);
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 1.25rem;
+        }
+
         .partner-btn {
             border-radius: 999px;
             padding: .72rem 1.2rem;
@@ -173,13 +189,29 @@
     </style>
 
     <main class="partner-page">
-        <section class="partner-hero">
+        <nav class="partner-nav py-3">
+            <div class="container d-flex align-items-center justify-content-between gap-3">
+                <a href="#inicio" class="d-flex align-items-center gap-2 text-decoration-none">
+                    <img src="{{ \App\CentralLogics\Helpers::logoFullUrl() }}" alt="logo" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">
+                    <span class="fw-bold text-dark">Parceiros {{ $business_name != 'null' ? $business_name : 'Sixam Mart' }}</span>
+                </a>
+                <div class="partner-nav-links d-none d-lg-flex align-items-center">
+                    <a href="#solucoes">Soluções</a>
+                    <a href="#como-funciona">Como funciona</a>
+                    <a href="#recursos">Recursos</a>
+                    <a href="#areas">Áreas atendidas</a>
+                </div>
+                <a class="partner-btn partner-btn--primary" href="{{ route('restaurant.create') }}">Cadastrar loja</a>
+            </div>
+        </nav>
+
+        <section id="inicio" class="partner-hero">
             <div class="container">
                 <div class="row g-4 align-items-center">
                     <div class="col-lg-7">
-                        <span class="partner-badge">Plataforma completa para vender e entregar</span>
-                        <h1 class="partner-title">Venda mais com uma operação simples e inteligente</h1>
-                        <p class="partner-subtitle">Tenha pedidos, entregas e gestão em um único painel com uma experiência moderna para parceiros.</p>
+                        <span class="partner-badge">Estrutura inspirada no fluxo de parceiros</span>
+                        <h1 class="partner-title">{{ $landing_data['fixed_header_title'] }}</h1>
+                        <p class="partner-subtitle">{{ $landing_data['fixed_header_sub_title'] }}</p>
                         <div class="d-flex flex-wrap gap-2 mt-4">
                             <a class="partner-btn partner-btn--primary" href="{{ route('restaurant.create') }}">Quero vender agora</a>
                             <a class="partner-btn partner-btn--ghost" href="{{ route('deliveryman.create') }}">Quero entregar</a>
@@ -187,14 +219,14 @@
                     </div>
                     <div class="col-lg-5">
                         <div class="partner-hero-card">
-                            <img class="partner-hero-image onerror-image" data-onerror-image="{{ asset('public/assets/admin/img/160x160/img2.jpg') }}" src="{{ asset('public/assets/landing/img/main-banner.svg') }}" alt="Destaque parceiros">
+                            <img class="partner-hero-image onerror-image" data-onerror-image="{{ asset('public/assets/admin/img/160x160/img2.jpg') }}" src="{{ $landing_data['fixed_header_bg_full_url'] ?? \App\CentralLogics\Helpers::logoFullUrl() }}" alt="Destaque parceiros">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="partner-section pt-0">
+        <section id="solucoes" class="partner-section pt-0">
             <div class="container">
                 <h2 class="partner-section-title">{{ $landing_data['fixed_module_title'] }}</h2>
                 <p class="partner-section-subtitle">{{ $landing_data['fixed_module_sub_title'] }}</p>
@@ -216,10 +248,10 @@
             </div>
         </section>
 
-        <section class="partner-section">
+        <section id="como-funciona" class="partner-section">
             <div class="container">
-                <h2 class="partner-section-title">Como começar em poucos passos</h2>
-                <p class="partner-section-subtitle">Cadastre sua operação, publique produtos e acompanhe seus resultados em um só lugar.</p>
+                <h2 class="partner-section-title">Como funciona para começar</h2>
+                <p class="partner-section-subtitle">Fluxo simples para reproduzir a navegação estilo parceiros: cadastro, configuração e operação em poucos passos.</p>
                 <div class="row g-3">
                     <div class="col-md-4">
                         <div class="partner-step h-100">
@@ -246,7 +278,7 @@
             </div>
         </section>
 
-        <section class="partner-section pt-0">
+        <section id="recursos" class="partner-section pt-0">
             <div class="container">
                 <h2 class="partner-section-title">{{ $landing_data['feature_title'] }}</h2>
                 <p class="partner-section-subtitle">{{ $landing_data['feature_short_description'] }}</p>
@@ -272,7 +304,7 @@
         </section>
 
         @if ($landing_data['available_zone_status'])
-            <section class="partner-section pt-0">
+            <section id="areas" class="partner-section pt-0">
                 <div class="container">
                     <h2 class="partner-section-title">{{ $landing_data['available_zone_title'] }}</h2>
                     <p class="partner-section-subtitle">{{ $landing_data['available_zone_short_description'] }}</p>
@@ -291,8 +323,8 @@
         <section class="partner-section pt-0">
             <div class="container">
                 <div class="partner-cta">
-                    <h3 class="fw-bold">Sua operação pronta para crescer</h3>
-                    <p class="text-white-50 mb-3">Cadastre sua loja, organize seu catálogo e acompanhe tudo pelo painel administrativo.</p>
+                    <h3 class="fw-bold">Navegação renovada e visual em nova paleta</h3>
+                    <p class="text-white-50 mb-3">A estrutura foi organizada para lembrar páginas de parceiros: topo com âncoras, blocos objetivos e CTA em destaque.</p>
                     <div class="d-flex flex-wrap gap-2">
                         <a class="partner-btn partner-btn--primary" href="{{ route('admin.dashboard') }}">Acessar painel</a>
                         <a class="partner-btn partner-btn--ghost" href="{{ route('contact-us') }}">Falar com suporte</a>
