@@ -17,7 +17,7 @@ $countryCode= strtolower($country?$country->value:'auto');
             </div>
             <!-- Page Header -->
             <div class="section-header">
-                <h2 class="title mb-2">{{translate("messages.Deliveryman")}} <span class="text--base">{{translate("messages.Application")}}</span></h2>
+                <h2 class="title mb-2">Cadastro <span class="text--base">de Entregador</span></h2>
             </div>
             <!-- End Page Header -->
                 <form class="validate-form" action="{{ route('deliveryman.store') }}" method="post" enctype="multipart/form-data" id="form-id">
@@ -140,11 +140,9 @@ $countryCode= strtolower($country?$country->value:'auto');
                                             for="exampleFormControlInput1">{{ translate('messages.identity_type') }}
                                             <small
                                             class="text-danger">*</small> </label>
-                                        <select name="identity_type" class="form-control __form-control">
-                                            <option value="passport">{{ translate('messages.passport') }}</option>
-                                            <option value="driving_license">{{ translate('messages.driving_license') }}</option>
-                                            <option value="nid">{{ translate('messages.nid') }}</option>
-                                            <option value="restaurant_id">{{ translate('messages.store_id') }}</option>
+                                        <select name="identity_type" class="form-control __form-control" required>
+                                            <option value="rg">RG</option>
+                                            <option value="cnh">CNH</option>
                                         </select>
                                     </div>
                                 </div>
@@ -160,9 +158,9 @@ $countryCode= strtolower($country?$country->value:'auto');
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group mb-0">
-                                        <label class="input-label">{{ translate('messages.identity_image') }}
+                                        <label class="input-label">{{ translate('messages.identity_image') }} (frente e verso)
                                             <small
-                                            class="text-danger">*</small>
+                                            class="text-danger">* - envie 2 imagens</small>
                                         </label>
                                         <div>
                                             <div class="row" id="coba"></div>
@@ -719,7 +717,7 @@ $countryCode= strtolower($country?$country->value:'auto');
         $(function() {
             $("#coba").spartanMultiImagePicker({
                 fieldName: 'identity_image[]',
-                maxCount: 5,
+                maxCount: 2,
                 rowHeight: '120px',
                 groupClassName: 'col-lg-2 col-md-4 col-sm-4 col-6',
                 maxFileSize: '{{ MAX_FILE_SIZE * 1024 * 1024 }}',

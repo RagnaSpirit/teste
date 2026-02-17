@@ -81,7 +81,10 @@ class DeliveryManController extends Controller
         $request->validate([
             'f_name' => 'required|max:100',
             'l_name' => 'nullable|max:100',
+            'identity_type' => 'required|in:rg,cnh',
             'identity_number' => 'required|max:30',
+            'identity_image' => 'required|array|size:2',
+            'identity_image.*' => 'image|mimes:jpg,jpeg,png,webp|max:2048',
             'email' => 'required|unique:delivery_men',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:delivery_men',
             'zone_id' => 'required',
