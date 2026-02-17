@@ -392,7 +392,7 @@
                 <div class="partner-benefits">
                     <div class="row g-3 align-items-stretch">
                         <div class="col-lg-5 d-flex align-items-center">
-                            <h2 class="partner-benefits-title">Vantagens que só quem é parceiro iFood têm</h2>
+                            <h2 class="partner-benefits-title">Vantagens que só quem é parceiro Fox Delivery têm</h2>
                         </div>
                         <div class="col-sm-6 col-lg-3">
                             <article class="partner-benefit-card">

@@ -47,7 +47,7 @@ Route::prefix('parceiros/restaurante')->group(function () {
     Route::get('/', 'FunnelController@partnerRestaurant')->name('funnel.partner.restaurant');
     Route::get('ajuda', 'FunnelController@partnerHelp')->name('funnel.partner.help');
     Route::get('perguntas-frequentes', 'FunnelController@partnerFaq')->name('funnel.partner.faq');
-    Route::get('planos-ifood', 'FunnelController@partnerPlans')->name('funnel.partner.plans');
+    Route::get('planos-fox-delivery', 'FunnelController@partnerPlans')->name('funnel.partner.plans');
     Route::get('como-funciona/pagamento', 'FunnelController@partnerPayment')->name('funnel.partner.payment');
     Route::get('bem-vindo-de-volta', 'FunnelController@partnerWelcomeBack')->name('funnel.partner.welcome-back');
 });
