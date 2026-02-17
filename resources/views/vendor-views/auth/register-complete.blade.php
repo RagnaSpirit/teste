@@ -14,7 +14,7 @@
             </div>
             <!-- Page Header -->
             <div class="section-header">
-                <h2 class="title mb-2">{{ translate('messages.vendor') }} <span class="text--base">{{translate('application')}}</span></h2>
+                <h2 class="title mb-2">{{ translate('Cadastro De Lojas') }}</h2>
             </div>
             <!-- End Page Header -->
 
