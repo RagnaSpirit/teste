@@ -87,39 +87,8 @@
                         <span></span>
                         <span></span>
                     </div>
-                    @php( $local = session()->has('landing_local')?session('landing_local'):null)
-                    @php($lang = \App\CentralLogics\Helpers::get_business_settings('system_language') )
-                    @if ($lang)
-                        <div class="dropdown--btn-hover position-relative">
-                            <a class="dropdown--btn border-0 px-3 header--btn text-capitalize d-flex align-items-center" href="javascript:void(0)">
-                                @foreach($lang as $data)
-                                @if($data['code']==$local)
-                                    <span class="me-1">{{$data['code']}}</span>
-                                @elseif(!$local &&  $data['default'] == true)
-                                    <span class="me-1">{{$data['code']}}</span>
-                                @endif
-                                @endforeach
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7.24701 11.14L2.45101 5.658C1.88501 5.013 2.34501 4 3.20401 4H12.796C12.9883 3.99984 13.1765 4.05509 13.3381 4.15914C13.4998 4.26319 13.628 4.41164 13.7075 4.58669C13.7869 4.76175 13.8142 4.956 13.7861 5.14618C13.758 5.33636 13.6757 5.51441 13.549 5.659L8.75301 11.139C8.65915 11.2464 8.5434 11.3325 8.41352 11.3915C8.28364 11.4505 8.14265 11.481 8.00001 11.481C7.85737 11.481 7.71638 11.4505 7.5865 11.3915C7.45663 11.3325 7.34087 11.2464 7.24701 11.139V11.14Z" fill="#768D82"/>
-                                </svg>
-                            </a>
-                            <ul class="dropdown-list py-0" style="min-width:120px; top:100%">
-                                @foreach($lang as $key =>$data)
-                                @if($data['status']==1)
-                                    <li class="py-0">
-                                        <a class="" href="{{route('lang',[$data['code']])}}">
-                                            {{$data['code']}}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider my-0">
-                                    </li>
-                                @endif
-                            @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    @if ($fixed_link &&$fixed_link['web_app_url_status'])
+                    {{-- idioma oculto: site apenas em português-BR --}}
+@if ($fixed_link &&$fixed_link['web_app_url_status'])
                         <div class="me-2 d-none d-lg-block">
                             <a class="cmn--btn me-xl-auto py-2" href="{{ $fixed_link['web_app_url'] }}" target="_blank">{{ translate('messages.browse_web') }}</a>
                         </div>
