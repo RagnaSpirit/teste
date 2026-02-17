@@ -99,6 +99,16 @@ class VendorController extends Controller
            return response()->json(['errors' => Helpers::error_processor($validator)]);
         }
 
+        $normalizedDocumentNumber = preg_replace('/\D/', '', $request->tin ?? '');
+        if ($request->document_type === 'cpf' && strlen($normalizedDocumentNumber) !== 11) {
+            $validator->getMessageBag()->add('tin', translate('CPF must contain 11 digits'));
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+        if ($request->document_type === 'cnpj' && strlen($normalizedDocumentNumber) !== 14) {
+            $validator->getMessageBag()->add('tin', translate('CNPJ must contain 14 digits'));
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+
         if($request->zone_id)
         {
             $zone = Zone::query()
@@ -215,6 +225,16 @@ class VendorController extends Controller
            if ($validator->fails()) {
            return response()->json(['errors' => Helpers::error_processor($validator)]);
 
+        }
+
+        $normalizedDocumentNumber = preg_replace('/\D/', '', $request->tin ?? '');
+        if ($request->document_type === 'cpf' && strlen($normalizedDocumentNumber) !== 11) {
+            $validator->getMessageBag()->add('tin', translate('CPF must contain 11 digits'));
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+        if ($request->document_type === 'cnpj' && strlen($normalizedDocumentNumber) !== 14) {
+            $validator->getMessageBag()->add('tin', translate('CNPJ must contain 14 digits'));
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
         }
 
         if($request->zone_id)
