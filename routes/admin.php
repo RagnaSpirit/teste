@@ -87,6 +87,15 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
         Route::post('item/variant-price', 'ItemController@variant_price')->name('item.variant-price');
 
+        Route::group(['prefix' => 'costing', 'as' => 'costing.'], function () {
+            Route::get('/', [\App\Http\Controllers\Admin\Costing\CostingController::class, 'index'])->name('index');
+            Route::get('product/{item}', [\App\Http\Controllers\Admin\Costing\CostingController::class, 'show'])->name('show');
+            Route::post('product/{item}/ingredient', [\App\Http\Controllers\Admin\Costing\CostingController::class, 'storeIngredient'])->name('ingredient.store');
+            Route::match(['get', 'post'], 'pricing', [\App\Http\Controllers\Admin\Costing\CostingController::class, 'pricing'])->name('pricing');
+            Route::get('export/csv', [\App\Http\Controllers\Admin\Costing\CostingController::class, 'exportCsv'])->name('export.csv');
+        });
+
+
         Route::group(['prefix' => 'item', 'as' => 'item.', 'middleware' => ['module:item']], function () {
             Route::get('add-new', 'ItemController@index')->name('add-new');
             Route::post('variant-combination', 'ItemController@variant_combination')->name('variant-combination');
