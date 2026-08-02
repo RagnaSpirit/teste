@@ -47,6 +47,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::get('system-currency', 'SystemController@system_currency')->name('system_currency');
         //dashboard
         Route::get('/', 'DashboardController@dashboard')->name('dashboard');
+        Route::get('erp', [\App\Http\Controllers\Admin\Erp\ErpPageController::class, 'index'])->name('erp.index');
 
         Route::get('maintenance-mode', 'SystemController@maintenance_mode')->name('maintenance-mode');
         Route::get('landing-page', 'SystemController@landing_page')->name('landing-page');
