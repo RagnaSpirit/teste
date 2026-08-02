@@ -259,3 +259,14 @@ Route::get('/image-proxy', function () {
         ->header('Content-Type', $response->header('Content-Type'))
         ->header('Access-Control-Allow-Origin', '*');
 });
+
+Route::prefix('admin/restaurant-ops')->as('admin.restaurant-ops.')->middleware(['web'])->group(function () {
+    Route::get('pos', [\App\RestaurantOps\Http\Controllers\RestaurantOpsController::class, 'pos'])->name('pos');
+    Route::get('kds', [\App\RestaurantOps\Http\Controllers\RestaurantOpsController::class, 'kds'])->name('kds');
+    Route::get('dashboard', [\App\RestaurantOps\Http\Controllers\RestaurantOpsController::class, 'dashboard'])->name('dashboard');
+    Route::post('orders', [\App\RestaurantOps\Http\Controllers\RestaurantOpsController::class, 'storeOrder'])->name('orders.store');
+    Route::patch('orders/{order}/status', [\App\RestaurantOps\Http\Controllers\RestaurantOpsController::class, 'updateStatus'])->name('orders.status');
+    Route::post('orders/{order}/print', [\App\RestaurantOps\Http\Controllers\RestaurantOpsController::class, 'print'])->name('orders.print');
+    Route::get('tables', [\App\RestaurantOps\Http\Controllers\RestaurantOpsController::class, 'tables'])->name('tables');
+    Route::post('tabs', [\App\RestaurantOps\Http\Controllers\RestaurantOpsController::class, 'tabs'])->name('tabs.store');
+});
