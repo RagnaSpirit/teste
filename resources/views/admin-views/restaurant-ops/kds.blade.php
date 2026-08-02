@@ -1,0 +1,3 @@
+@extends('layouts.admin.app')
+@section('title','KDS Cozinha')
+@section('content')<div style="background:#020617;color:white;min-height:80vh;padding:24px"><h1>KDS - Cozinha em tempo real</h1><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px">@foreach($orders as $order)<article style="background:#111827;border:1px solid #334155;border-radius:16px;padding:16px"><h3>#{{ $order->id }} {{ $order->type }}</h3><p>Status: {{ $order->status }} | Prioridade: {{ $order->priority }}</p><p>Tempo: {{ $order->created_at->diffForHumans(null,true) }}</p><p>{{ $order->notes }}</p><button>Recebido</button><button>Preparando</button><button>Pronto</button><button>Entregue</button></article>@endforeach</div></div>@endsection
