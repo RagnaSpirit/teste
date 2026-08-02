@@ -528,3 +528,18 @@ Route::group(['namespace' => 'Api\V1', 'middleware'=>'localization'], function (
     Route::get('get-parcel-cancellation-reasons', 'ConfigController@parcel_cancellation_reason');
 });
 
+
+Route::group(['namespace' => 'Api\V1\Erp', 'prefix' => 'erp'], function () {
+    Route::get('dashboard', 'ErpController@dashboard')->middleware('erp.permission:dashboard');
+    Route::get('companies', 'ErpController@companies')->middleware('erp.permission:company');
+    Route::post('companies', 'ErpController@storeCompany')->middleware('erp.permission:company');
+    Route::put('companies/{company}', 'ErpController@updateCompany')->middleware('erp.permission:company');
+    Route::get('suppliers', 'ErpController@suppliers')->middleware('erp.permission:suppliers');
+    Route::post('suppliers', 'ErpController@storeSupplier')->middleware('erp.permission:suppliers');
+    Route::put('suppliers/{supplier}', 'ErpController@updateSupplier')->middleware('erp.permission:suppliers');
+    Route::get('ingredients', 'ErpController@ingredients')->middleware('erp.permission:ingredients');
+    Route::post('ingredients', 'ErpController@storeIngredient')->middleware('erp.permission:ingredients');
+    Route::get('stock-movements', 'ErpController@stockMovements')->middleware('erp.permission:stock');
+    Route::post('stock-movements', 'ErpController@moveStock')->middleware('erp.permission:stock');
+    Route::post('purchases', 'ErpController@storePurchase')->middleware('erp.permission:purchases');
+});
