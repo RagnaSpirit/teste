@@ -53,6 +53,17 @@ class Item extends Model
         return $query->where('recommended', 1);
     }
 
+
+    public function technicalSheetIngredients()
+    {
+        return $this->hasMany(TechnicalSheetIngredient::class);
+    }
+
+    public function costProfile()
+    {
+        return $this->hasOne(ProductCostProfile::class);
+    }
+
     public function carts()
     {
         return $this->morphMany(Cart::class, 'item');
